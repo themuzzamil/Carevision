@@ -9,13 +9,14 @@ import { Label } from "@/components/ui/label";
 import { mockPatients, mockSessions, mockUsers, mockAiAnalyses } from "@/lib/data";
 import { Header } from "@/components/header";
 import { Bot, FileUp, FileText, Loader2, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useState, use } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { GenerateClinicalReportOutput } from "@/ai/flows/generate-clinical-report";
 import { generateClinicalReport } from "@/ai/flows/generate-clinical-report";
 import { AiReportDisplay } from "@/components/ai-report-display";
 
-export default function SessionDetailPage({ params }: { params: { patientId: string; sessionId: string } }) {
+export default function SessionDetailPage({ params: paramsPromise }: { params: Promise<{ patientId: string; sessionId: string }> }) {
+    const params = use(paramsPromise);
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
     const [aiResult, setAiResult] = useState<GenerateClinicalReportOutput | null>(mockAiAnalyses.find(a => a.sessionId === params.sessionId) || null);
