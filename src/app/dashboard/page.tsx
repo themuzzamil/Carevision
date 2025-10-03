@@ -40,7 +40,7 @@ export default function DashboardPage() {
         resolver: zodResolver(patientFormSchema),
         defaultValues: {
             name: "",
-            age: undefined,
+            age: "" as any,
             gender: undefined,
             contact: "",
         },
